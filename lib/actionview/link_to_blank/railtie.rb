@@ -1,10 +1,10 @@
-require 'actionview/link_to_blank/url_helper'
-
 module Actionview
   module LinkToBlank
-    class Railtie < Rails::Railtie
-      initializer 'actionview.link_to_blank.url_helper' do |app|
-        ActionView::Base.send :include, UrlHelper
+    class Railtie < ::Rails::Railtie
+      initializer 'actionview-link_to_blank' do |app|
+        ActiveSupport.on_load(:action_view) do
+          require 'actionview/link_to_blank/link_to_blank'
+        end
       end
     end
   end
