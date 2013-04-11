@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'actionview/link_to_blank/version'
+require 'action_view/link_to_blank/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "actionview-link_to_blank"
-  spec.version       = Actionview::LinkToBlank::VERSION
+  spec.version       = ActionView::LinkToBlank::VERSION
   spec.authors       = ["sanemat"]
   spec.email         = ["o.gata.ken@gmail.com"]
   spec.description   = %q{Alias link_to with target _blank}
