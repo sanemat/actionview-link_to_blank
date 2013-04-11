@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Actionview::LinkToBlank::VERSION
   spec.authors       = ["sanemat"]
   spec.email         = ["o.gata.ken@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{Alias link_to with target _blank}
+  spec.summary       = %q{Alias link_to with target _blank}
   spec.homepage      = ""
   spec.license       = "MIT"
 
