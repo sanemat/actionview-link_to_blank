@@ -1,2 +1,2 @@
-require "actionview/link_to_blank/version"
-require 'actionview/link_to_blank/railtie' if defined? Rails
+require "action_view/link_to_blank/version"
+require 'action_view/link_to_blank/railtie' if defined? Rails
