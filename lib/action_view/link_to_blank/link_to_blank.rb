@@ -13,7 +13,7 @@ module LinkToBlank
             html_options = args[2] || {}
 
             # override
-            html_options.merge(target: '_blank')
+            html_options.merge!(target: '_blank')
 
             link_to(name, options, html_options)
           end
