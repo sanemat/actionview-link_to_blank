@@ -5,14 +5,12 @@ module Actionview
     def link_to_blank(*args, &block)
       if block_given?
         options      = args.first || {}
-        html_options = args.second
+        html_options = args.second || {}
         link_to_blank(capture(&block), options, html_options)
       else
         name         = args[0]
         options      = args[1] || {}
-        html_options = args[2]
-
-        html_options = convert_options_to_data_attributes(options, html_options)
+        html_options = args[2] || {}
 
         # override
         html_options.merge(target: '_blank')
