@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["o.gata.ken@gmail.com"]
   spec.description   = %q{Alias link_to with target _blank}
   spec.summary       = %q{Alias link_to with target _blank}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/sanemat/actionview-link_to_blank"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
