@@ -1,7 +1,7 @@
-require "bundler/gem_tasks"
+require 'bundler/gem_tasks'
 require 'rake/testtask'
 
-desc "Default Task"
+desc 'Default Task'
 task :default => :test
 
 Rake::TestTask.new do |t|
