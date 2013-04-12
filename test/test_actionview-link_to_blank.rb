@@ -1,4 +1,6 @@
-require 'action_pack'
+require 'minitest/autorun'
+require 'active_support/concern'
+require 'action_view/helpers/capture_helper'
 require 'action_view/helpers/url_helper'
 require 'action_view/link_to_blank/link_to_blank'
 
