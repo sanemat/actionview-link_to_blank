@@ -10,7 +10,7 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
 
   def test_initialization
     [:link_to_blank].each do |method|
-      assert_includes ActionView::Helper::UrlHelper.instance_methods, method
+      assert_includes ActionView::Helpers::UrlHelper.instance_methods, method
     end
   end
 end
