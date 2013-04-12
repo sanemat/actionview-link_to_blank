@@ -1,4 +1,4 @@
-# Actionview::LinkToBlank
+# ActionView::LinkToBlank
 
 TODO: Write a gem description
 
