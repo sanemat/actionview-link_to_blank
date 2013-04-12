@@ -1,5 +1,6 @@
 require 'minitest/autorun'
 require 'active_support/concern'
+require 'active_support/core_ext'
 require 'action_view/helpers/capture_helper'
 require 'action_view/helpers/url_helper'
 require 'action_view/link_to_blank/link_to_blank'
