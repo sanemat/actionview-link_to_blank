@@ -1,6 +1,8 @@
 # ActionView::LinkToBlank
 
-TODO: Write a gem description
+[![Build Status](https://api.travis-ci.org/sanemat/actionview-link_to_blank.png?branch=master)](https://travis-ci.org/sanemat/actionview-link_to_blank)
+
+Add helper method, link_to with target _blank
 
 ## Installation
 
