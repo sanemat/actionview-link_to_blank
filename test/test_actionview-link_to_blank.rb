@@ -8,16 +8,18 @@ require 'action_view/link_to_blank/link_to_blank'
 class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
   include ActionView::Helpers::UrlHelper
 
+  include ActionDispatch::Assertions::DomAssertions
+
   def test_initialization
     [:link_to_blank].each do |method|
       assert_includes ActionView::Helpers::UrlHelper.instance_methods, method
     end
   end
 
-=begin
   def test_link_tag_with_straight_url
     assert_dom_equal %{<a href="http://www.example.com">Hello</a>}, link_to("Hello", "http://www.example.com")
   end
+=begin
 
   def test_link_tag_without_host_option
     assert_dom_equal(%{<a href="/">Test Link</a>}, link_to('Test Link', url_hash))
