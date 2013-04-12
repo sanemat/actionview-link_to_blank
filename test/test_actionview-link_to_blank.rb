@@ -17,7 +17,7 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
   end
 
   def test_link_tag_with_straight_url
-    assert_dom_equal %{<a href="http://www.example.com">Hello</a>}, link_to("Hello", "http://www.example.com")
+    assert_dom_equal %{<a href="http://www.example.com" target="_blank">Hello</a>}, link_to_blank("Hello", "http://www.example.com")
   end
 =begin
 
