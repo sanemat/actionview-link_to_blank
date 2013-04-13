@@ -4,6 +4,7 @@ require 'active_support/core_ext'
 require 'action_view/helpers/capture_helper'
 require 'action_view/helpers/url_helper'
 require 'action_view/link_to_blank/link_to_blank'
+require 'action_dispatch/testing/assertions'
 
 class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
   include ActionView::Helpers::UrlHelper
