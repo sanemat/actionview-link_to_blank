@@ -132,64 +132,64 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
 
   def test_link_to_with_remote
     assert_dom_equal(
-      %{<a href="http://www.example.com" data-remote="true">Hello</a>},
-      link_to("Hello", "http://www.example.com", remote: true)
+      %{<a href="http://www.example.com" data-remote="true" target="_blank">Hello</a>},
+      link_to_blank("Hello", "http://www.example.com", remote: true)
     )
   end
 
   def test_link_to_with_remote_false
     assert_dom_equal(
-      %{<a href="http://www.example.com">Hello</a>},
-      link_to("Hello", "http://www.example.com", remote: false)
+      %{<a href="http://www.example.com" target="_blank">Hello</a>},
+      link_to_blank("Hello", "http://www.example.com", remote: false)
     )
   end
 
   def test_link_to_with_symbolic_remote_in_non_html_options
     assert_dom_equal(
-      %{<a href="/" data-remote="true">Hello</a>},
-      link_to("Hello", hash_for(remote: true), {})
+      %{<a href="/" data-remote="true" target="_blank">Hello</a>},
+      link_to_blank("Hello", hash_for(remote: true), {})
     )
   end
 
   def test_link_to_with_string_remote_in_non_html_options
     assert_dom_equal(
-      %{<a href="/" data-remote="true">Hello</a>},
-      link_to("Hello", hash_for('remote' => true), {})
+      %{<a href="/" data-remote="true" target="_blank">Hello</a>},
+      link_to_blank("Hello", hash_for('remote' => true), {})
     )
   end
 
   def test_link_tag_using_post_javascript
     assert_dom_equal(
-      %{<a href="http://www.example.com" data-method="post" rel="nofollow">Hello</a>},
-      link_to("Hello", "http://www.example.com", method: :post)
+      %{<a href="http://www.example.com" data-method="post" rel="nofollow" target="_blank">Hello</a>},
+      link_to_blank("Hello", "http://www.example.com", method: :post)
     )
   end
 
   def test_link_tag_using_delete_javascript
     assert_dom_equal(
-      %{<a href="http://www.example.com" rel="nofollow" data-method="delete">Destroy</a>},
-      link_to("Destroy", "http://www.example.com", method: :delete)
+      %{<a href="http://www.example.com" rel="nofollow" data-method="delete" target="_blank">Destroy</a>},
+      link_to_blank("Destroy", "http://www.example.com", method: :delete)
     )
   end
 
   def test_link_tag_using_delete_javascript_and_href
     assert_dom_equal(
-      %{<a href="\#" rel="nofollow" data-method="delete">Destroy</a>},
-      link_to("Destroy", "http://www.example.com", method: :delete, href: '#')
+      %{<a href="\#" rel="nofollow" data-method="delete" target="_blank">Destroy</a>},
+      link_to_blank("Destroy", "http://www.example.com", method: :delete, href: '#')
     )
   end
 
   def test_link_tag_using_post_javascript_and_rel
     assert_dom_equal(
-      %{<a href="http://www.example.com" data-method="post" rel="example nofollow">Hello</a>},
-      link_to("Hello", "http://www.example.com", method: :post, rel: 'example')
+      %{<a href="http://www.example.com" data-method="post" rel="example nofollow" target="_blank">Hello</a>},
+      link_to_blank("Hello", "http://www.example.com", method: :post, rel: 'example')
     )
   end
 
   def test_link_tag_using_post_javascript_and_confirm
     assert_dom_equal(
-      %{<a href="http://www.example.com" data-method="post" rel="nofollow" data-confirm="Are you serious?">Hello</a>},
-      link_to("Hello", "http://www.example.com", method: :post, data: { confirm: "Are you serious?" })
+      %{<a href="http://www.example.com" data-method="post" rel="nofollow" data-confirm="Are you serious?" target="_blank">Hello</a>},
+      link_to_blank("Hello", "http://www.example.com", method: :post, data: { confirm: "Are you serious?" })
     )
   end
 =begin
