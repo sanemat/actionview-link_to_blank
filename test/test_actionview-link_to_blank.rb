@@ -42,7 +42,7 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
   end
 
   def test_link_tag_without_host_option
-    assert_dom_equal(%{<a href="/">Test Link</a>}, link_to('Test Link', url_hash))
+    assert_dom_equal(%{<a href="/" target="_blank">Test Link</a>}, link_to_blank('Test Link', url_hash))
   end
 
 =begin
