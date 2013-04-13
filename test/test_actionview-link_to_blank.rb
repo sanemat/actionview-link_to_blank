@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'active_support/concern'
 require 'active_support/core_ext'
+require 'active_support/testing/deprecation'
 require 'action_view'
 require 'action_view/link_to_blank/link_to_blank'
 require 'action_dispatch'
@@ -24,6 +25,7 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
   include routes.url_helpers
 
   include ActionDispatch::Assertions::DomAssertions
+  include ActiveSupport::Testing::Deprecation
 
   def hash_for(options = {})
     { controller: "foo", action: "bar" }.merge!(options)
@@ -90,131 +92,134 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
     expected = %{<a href="http://www.example.com" onclick="#{escaped_onclick}" target="_blank">Hello</a>}
     assert_dom_equal expected, link
   end
-=begin
 
   def test_link_tag_with_javascript_confirm
     assert_dom_equal(
-      %{<a href="http://www.example.com" data-confirm="Are you sure?">Hello</a>},
-      link_to("Hello", "http://www.example.com", data: { confirm: "Are you sure?" })
+      %{<a href="http://www.example.com" data-confirm="Are you sure?" target="_blank">Hello</a>},
+      link_to_blank("Hello", "http://www.example.com", data: { confirm: "Are you sure?" })
     )
     assert_dom_equal(
-      %{<a href="http://www.example.com" data-confirm="You cant possibly be sure, can you?">Hello</a>},
-      link_to("Hello", "http://www.example.com", data: { confirm: "You cant possibly be sure, can you?" })
+      %{<a href="http://www.example.com" data-confirm="You cant possibly be sure, can you?" target="_blank">Hello</a>},
+      link_to_blank("Hello", "http://www.example.com", data: { confirm: "You cant possibly be sure, can you?" })
     )
     assert_dom_equal(
-      %{<a href="http://www.example.com" data-confirm="You cant possibly be sure,\n can you?">Hello</a>},
-      link_to("Hello", "http://www.example.com", data: { confirm: "You cant possibly be sure,\n can you?" })
+      %{<a href="http://www.example.com" data-confirm="You cant possibly be sure,\n can you?" target="_blank">Hello</a>},
+      link_to_blank("Hello", "http://www.example.com", data: { confirm: "You cant possibly be sure,\n can you?" })
     )
   end
 
   def test_link_tag_with_deprecated_confirm
+    skip('Not deprecate in Rails3.2') if ActionPack::VERSION::MAJOR == 3
     assert_deprecated ":confirm option is deprecated and will be removed from Rails 4.1. Use 'data: { confirm: \'Text\' }' instead" do
       assert_dom_equal(
-        %{<a href="http://www.example.com" data-confirm="Are you sure?">Hello</a>},
-        link_to("Hello", "http://www.example.com", confirm: "Are you sure?")
+        %{<a href="http://www.example.com" data-confirm="Are you sure?" target="_blank">Hello</a>},
+        link_to_blank("Hello", "http://www.example.com", confirm: "Are you sure?")
       )
     end
     assert_deprecated ":confirm option is deprecated and will be removed from Rails 4.1. Use 'data: { confirm: \'Text\' }' instead" do
       assert_dom_equal(
-        %{<a href="http://www.example.com" data-confirm="You cant possibly be sure, can you?">Hello</a>},
-        link_to("Hello", "http://www.example.com", confirm: "You cant possibly be sure, can you?")
+        %{<a href="http://www.example.com" data-confirm="You cant possibly be sure, can you?" target="_blank">Hello</a>},
+        link_to_blank("Hello", "http://www.example.com", confirm: "You cant possibly be sure, can you?")
       )
     end
     assert_deprecated ":confirm option is deprecated and will be removed from Rails 4.1. Use 'data: { confirm: \'Text\' }' instead" do
       assert_dom_equal(
-        %{<a href="http://www.example.com" data-confirm="You cant possibly be sure,\n can you?">Hello</a>},
-        link_to("Hello", "http://www.example.com", confirm: "You cant possibly be sure,\n can you?")
+        %{<a href="http://www.example.com" data-confirm="You cant possibly be sure,\n can you?" target="_blank">Hello</a>},
+        link_to_blank("Hello", "http://www.example.com", confirm: "You cant possibly be sure,\n can you?")
       )
     end
   end
 
   def test_link_to_with_remote
     assert_dom_equal(
-      %{<a href="http://www.example.com" data-remote="true">Hello</a>},
-      link_to("Hello", "http://www.example.com", remote: true)
+      %{<a href="http://www.example.com" data-remote="true" target="_blank">Hello</a>},
+      link_to_blank("Hello", "http://www.example.com", remote: true)
     )
   end
 
   def test_link_to_with_remote_false
     assert_dom_equal(
-      %{<a href="http://www.example.com">Hello</a>},
-      link_to("Hello", "http://www.example.com", remote: false)
+      %{<a href="http://www.example.com" target="_blank">Hello</a>},
+      link_to_blank("Hello", "http://www.example.com", remote: false)
     )
   end
 
   def test_link_to_with_symbolic_remote_in_non_html_options
     assert_dom_equal(
-      %{<a href="/" data-remote="true">Hello</a>},
-      link_to("Hello", hash_for(remote: true), {})
+      %{<a href="/" data-remote="true" target="_blank">Hello</a>},
+      link_to_blank("Hello", hash_for(remote: true), {})
     )
   end
 
   def test_link_to_with_string_remote_in_non_html_options
     assert_dom_equal(
-      %{<a href="/" data-remote="true">Hello</a>},
-      link_to("Hello", hash_for('remote' => true), {})
+      %{<a href="/" data-remote="true" target="_blank">Hello</a>},
+      link_to_blank("Hello", hash_for('remote' => true), {})
     )
   end
 
   def test_link_tag_using_post_javascript
     assert_dom_equal(
-      %{<a href="http://www.example.com" data-method="post" rel="nofollow">Hello</a>},
-      link_to("Hello", "http://www.example.com", method: :post)
+      %{<a href="http://www.example.com" data-method="post" rel="nofollow" target="_blank">Hello</a>},
+      link_to_blank("Hello", "http://www.example.com", method: :post)
     )
   end
 
   def test_link_tag_using_delete_javascript
     assert_dom_equal(
-      %{<a href="http://www.example.com" rel="nofollow" data-method="delete">Destroy</a>},
-      link_to("Destroy", "http://www.example.com", method: :delete)
+      %{<a href="http://www.example.com" rel="nofollow" data-method="delete" target="_blank">Destroy</a>},
+      link_to_blank("Destroy", "http://www.example.com", method: :delete)
     )
   end
 
   def test_link_tag_using_delete_javascript_and_href
     assert_dom_equal(
-      %{<a href="\#" rel="nofollow" data-method="delete">Destroy</a>},
-      link_to("Destroy", "http://www.example.com", method: :delete, href: '#')
+      %{<a href="\#" rel="nofollow" data-method="delete" target="_blank">Destroy</a>},
+      link_to_blank("Destroy", "http://www.example.com", method: :delete, href: '#')
     )
   end
 
   def test_link_tag_using_post_javascript_and_rel
     assert_dom_equal(
-      %{<a href="http://www.example.com" data-method="post" rel="example nofollow">Hello</a>},
-      link_to("Hello", "http://www.example.com", method: :post, rel: 'example')
+      %{<a href="http://www.example.com" data-method="post" rel="example nofollow" target="_blank">Hello</a>},
+      link_to_blank("Hello", "http://www.example.com", method: :post, rel: 'example')
     )
   end
 
   def test_link_tag_using_post_javascript_and_confirm
     assert_dom_equal(
-      %{<a href="http://www.example.com" data-method="post" rel="nofollow" data-confirm="Are you serious?">Hello</a>},
-      link_to("Hello", "http://www.example.com", method: :post, data: { confirm: "Are you serious?" })
+      %{<a href="http://www.example.com" data-method="post" rel="nofollow" data-confirm="Are you serious?" target="_blank">Hello</a>},
+      link_to_blank("Hello", "http://www.example.com", method: :post, data: { confirm: "Are you serious?" })
     )
   end
 
   def test_link_tag_using_post_javascript_and_with_deprecated_confirm
+    skip('Not deprecate in Rails3.2') if ActionPack::VERSION::MAJOR == 3
     assert_deprecated ":confirm option is deprecated and will be removed from Rails 4.1. Use 'data: { confirm: \'Text\' }' instead" do
       assert_dom_equal(
-        %{<a href="http://www.example.com" data-method="post" rel="nofollow" data-confirm="Are you serious?">Hello</a>},
-        link_to("Hello", "http://www.example.com", method: :post, confirm: "Are you serious?")
+        %{<a href="http://www.example.com" data-method="post" rel="nofollow" data-confirm="Are you serious?" target="_blank">Hello</a>},
+        link_to_blank("Hello", "http://www.example.com", method: :post, confirm: "Are you serious?")
       )
     end
   end
 
   def test_link_tag_using_delete_javascript_and_href_and_confirm
     assert_dom_equal(
-      %{<a href="\#" rel="nofollow" data-confirm="Are you serious?" data-method="delete">Destroy</a>},
-      link_to("Destroy", "http://www.example.com", method: :delete, href: '#', data: { confirm: "Are you serious?" })
+      %{<a href="\#" rel="nofollow" data-confirm="Are you serious?" data-method="delete" target="_blank">Destroy</a>},
+      link_to_blank("Destroy", "http://www.example.com", method: :delete, href: '#', data: { confirm: "Are you serious?" })
     )
   end
 
   def test_link_tag_using_delete_javascript_and_href_and_with_deprecated_confirm
+    skip('Not deprecate in Rails3.2') if ActionPack::VERSION::MAJOR == 3
     assert_deprecated ":confirm option is deprecated and will be removed from Rails 4.1. Use 'data: { confirm: \'Text\' }' instead" do
       assert_dom_equal(
-        %{<a href="\#" rel="nofollow" data-confirm="Are you serious?" data-method="delete">Destroy</a>},
-        link_to("Destroy", "http://www.example.com", method: :delete, href: '#', confirm: "Are you serious?")
+        %{<a href="\#" rel="nofollow" data-confirm="Are you serious?" data-method="delete" target="_blank">Destroy</a>},
+        link_to_blank("Destroy", "http://www.example.com", method: :delete, href: '#', confirm: "Are you serious?")
       )
     end
   end
+=begin
 
   def test_link_tag_with_block
     assert_dom_equal %{<a href="/"><span>Example site</span></a>},
