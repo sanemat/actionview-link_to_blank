@@ -26,6 +26,7 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
 
   include ActionDispatch::Assertions::DomAssertions
   include ActiveSupport::Testing::Deprecation
+  include ActionView::Context
 
   def hash_for(options = {})
     { controller: "foo", action: "bar" }.merge!(options)
@@ -219,12 +220,12 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
       )
     end
   end
-=begin
 
   def test_link_tag_with_block
     assert_dom_equal %{<a href="/"><span>Example site</span></a>},
       link_to('/') { content_tag(:span, 'Example site') }
   end
+=begin
 
   def test_link_tag_with_block_and_html_options
     assert_dom_equal %{<a class="special" href="/"><span>Example site</span></a>},
