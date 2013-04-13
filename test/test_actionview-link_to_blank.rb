@@ -44,47 +44,47 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
     assert_dom_equal(%{<a href="/" target="_blank">Test Link</a>}, link_to_blank('Test Link', url_hash))
   end
 
-=begin
   def test_link_tag_with_host_option
     hash = hash_for(host: "www.example.com")
-    expected = %{<a href="http://www.example.com/">Test Link</a>}
-    assert_dom_equal(expected, link_to('Test Link', hash))
+    expected = %{<a href="http://www.example.com/" target="_blank">Test Link</a>}
+    assert_dom_equal(expected, link_to_blank('Test Link', hash))
   end
 
   def test_link_tag_with_query
-    expected = %{<a href="http://www.example.com?q1=v1&amp;q2=v2">Hello</a>}
-    assert_dom_equal expected, link_to("Hello", "http://www.example.com?q1=v1&q2=v2")
+    expected = %{<a href="http://www.example.com?q1=v1&amp;q2=v2" target="_blank">Hello</a>}
+    assert_dom_equal expected, link_to_blank("Hello", "http://www.example.com?q1=v1&q2=v2")
   end
 
   def test_link_tag_with_query_and_no_name
-    expected = %{<a href="http://www.example.com?q1=v1&amp;q2=v2">http://www.example.com?q1=v1&amp;q2=v2</a>}
-    assert_dom_equal expected, link_to(nil, "http://www.example.com?q1=v1&q2=v2")
+    expected = %{<a href="http://www.example.com?q1=v1&amp;q2=v2" target="_blank">http://www.example.com?q1=v1&amp;q2=v2</a>}
+    assert_dom_equal expected, link_to_blank(nil, "http://www.example.com?q1=v1&q2=v2")
   end
 
   def test_link_tag_with_back
     env = {"HTTP_REFERER" => "http://www.example.com/referer"}
     @controller = Struct.new(:request).new(Struct.new(:env).new(env))
-    expected = %{<a href="#{env["HTTP_REFERER"]}">go back</a>}
-    assert_dom_equal expected, link_to('go back', :back)
+    expected = %{<a href="#{env["HTTP_REFERER"]}" target="_blank">go back</a>}
+    assert_dom_equal expected, link_to_blank('go back', :back)
   end
 
   def test_link_tag_with_back_and_no_referer
     @controller = Struct.new(:request).new(Struct.new(:env).new({}))
-    link = link_to('go back', :back)
-    assert_dom_equal %{<a href="javascript:history.back()">go back</a>}, link
+    link = link_to_blank('go back', :back)
+    assert_dom_equal %{<a href="javascript:history.back()" target="_blank">go back</a>}, link
   end
 
   def test_link_tag_with_img
-    link = link_to("<img src='/favicon.jpg' />".html_safe, "/")
-    expected = %{<a href="/"><img src='/favicon.jpg' /></a>}
+    link = link_to_blank("<img src='/favicon.jpg' />".html_safe, "/")
+    expected = %{<a href="/" target="_blank"><img src='/favicon.jpg' /></a>}
     assert_dom_equal expected, link
   end
 
   def test_link_with_nil_html_options
-    link = link_to("Hello", url_hash, nil)
-    assert_dom_equal %{<a href="/">Hello</a>}, link
+    link = link_to_blank("Hello", url_hash, nil)
+    assert_dom_equal %{<a href="/" target="_blank">Hello</a>}, link
   end
 
+=begin
   def test_link_tag_with_custom_onclick
     link = link_to("Hello", "http://www.example.com", onclick: "alert('yay!')")
     expected = %{<a href="http://www.example.com" onclick="alert(&#39;yay!&#39;)">Hello</a>}
