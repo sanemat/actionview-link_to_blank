@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 version = '~> 3.2'
 gem 'actionpack', version
-gem 'actionpack', version
+gem 'activesupport', version
 
 # Specify your gem's dependencies in actionview-link_to_blank.gemspec
 gemspec path: '..'
