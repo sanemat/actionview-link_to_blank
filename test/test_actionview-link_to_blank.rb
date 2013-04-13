@@ -197,16 +197,16 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
     skip('Not deprecate in Rails3.2') if ActionPack::VERSION::MAJOR == 3
     assert_deprecated ":confirm option is deprecated and will be removed from Rails 4.1. Use 'data: { confirm: \'Text\' }' instead" do
       assert_dom_equal(
-        %{<a href="http://www.example.com" data-method="post" rel="nofollow" data-confirm="Are you serious?">Hello</a>},
-        link_to("Hello", "http://www.example.com", method: :post, confirm: "Are you serious?")
+        %{<a href="http://www.example.com" data-method="post" rel="nofollow" data-confirm="Are you serious?" target="_blank">Hello</a>},
+        link_to_blank("Hello", "http://www.example.com", method: :post, confirm: "Are you serious?")
       )
     end
   end
 
   def test_link_tag_using_delete_javascript_and_href_and_confirm
     assert_dom_equal(
-      %{<a href="\#" rel="nofollow" data-confirm="Are you serious?" data-method="delete">Destroy</a>},
-      link_to("Destroy", "http://www.example.com", method: :delete, href: '#', data: { confirm: "Are you serious?" })
+      %{<a href="\#" rel="nofollow" data-confirm="Are you serious?" data-method="delete" target="_blank">Destroy</a>},
+      link_to_blank("Destroy", "http://www.example.com", method: :delete, href: '#', data: { confirm: "Are you serious?" })
     )
   end
 
@@ -214,8 +214,8 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
     skip('Not deprecate in Rails3.2') if ActionPack::VERSION::MAJOR == 3
     assert_deprecated ":confirm option is deprecated and will be removed from Rails 4.1. Use 'data: { confirm: \'Text\' }' instead" do
       assert_dom_equal(
-        %{<a href="\#" rel="nofollow" data-confirm="Are you serious?" data-method="delete">Destroy</a>},
-        link_to("Destroy", "http://www.example.com", method: :delete, href: '#', confirm: "Are you serious?")
+        %{<a href="\#" rel="nofollow" data-confirm="Are you serious?" data-method="delete" target="_blank">Destroy</a>},
+        link_to_blank("Destroy", "http://www.example.com", method: :delete, href: '#', confirm: "Are you serious?")
       )
     end
   end
