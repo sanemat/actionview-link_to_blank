@@ -85,9 +85,9 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
   end
 
   def test_link_tag_with_custom_onclick
-    link = link_to("Hello", "http://www.example.com", onclick: "alert('yay!')")
+    link = link_to_blank("Hello", "http://www.example.com", onclick: "alert('yay!')")
     escaped_onclick = ActionPack::VERSION::MAJOR == 3 ? %{alert(&#x27;yay!&#x27;)} : %{alert(&#39;yay!&#39;)}
-    expected = %{<a href="http://www.example.com" onclick="#{escaped_onclick}">Hello</a>}
+    expected = %{<a href="http://www.example.com" onclick="#{escaped_onclick}" target="_blank">Hello</a>}
     assert_dom_equal expected, link
   end
 =begin
