@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'active_support/concern'
 require 'active_support/core_ext'
+require 'active_support/testing/deprecation'
 require 'action_view'
 require 'action_view/link_to_blank/link_to_blank'
 require 'action_dispatch'
@@ -24,6 +25,7 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
   include routes.url_helpers
 
   include ActionDispatch::Assertions::DomAssertions
+  include ActiveSupport::Testing::Deprecation
 
   def hash_for(options = {})
     { controller: "foo", action: "bar" }.merge!(options)
@@ -90,7 +92,6 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
     expected = %{<a href="http://www.example.com" onclick="#{escaped_onclick}" target="_blank">Hello</a>}
     assert_dom_equal expected, link
   end
-=begin
 
   def test_link_tag_with_javascript_confirm
     assert_dom_equal(
@@ -128,6 +129,7 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
     end
   end
 
+=begin
   def test_link_to_with_remote
     assert_dom_equal(
       %{<a href="http://www.example.com" data-remote="true">Hello</a>},
