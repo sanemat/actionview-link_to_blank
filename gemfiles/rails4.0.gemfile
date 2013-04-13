@@ -1,0 +1,8 @@
+source 'https://rubygems.org'
+
+version = '~> 4.0'
+gem 'actionpack', version
+gem 'actionpack', version
+
+# Specify your gem's dependencies in actionview-link_to_blank.gemspec
+gemspec path: '..'
