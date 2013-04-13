@@ -44,7 +44,6 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
     assert_dom_equal(%{<a href="/" target="_blank">Test Link</a>}, link_to_blank('Test Link', url_hash))
   end
 
-=begin
   def test_link_tag_with_host_option
     hash = hash_for(host: "www.example.com")
     expected = %{<a href="http://www.example.com/">Test Link</a>}
@@ -85,6 +84,7 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
     assert_dom_equal %{<a href="/">Hello</a>}, link
   end
 
+=begin
   def test_link_tag_with_custom_onclick
     link = link_to("Hello", "http://www.example.com", onclick: "alert('yay!')")
     expected = %{<a href="http://www.example.com" onclick="alert(&#39;yay!&#39;)">Hello</a>}
