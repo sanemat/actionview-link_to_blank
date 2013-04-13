@@ -95,16 +95,16 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
 
   def test_link_tag_with_javascript_confirm
     assert_dom_equal(
-      %{<a href="http://www.example.com" data-confirm="Are you sure?">Hello</a>},
-      link_to("Hello", "http://www.example.com", data: { confirm: "Are you sure?" })
+      %{<a href="http://www.example.com" data-confirm="Are you sure?" target="_blank">Hello</a>},
+      link_to_blank("Hello", "http://www.example.com", data: { confirm: "Are you sure?" })
     )
     assert_dom_equal(
-      %{<a href="http://www.example.com" data-confirm="You cant possibly be sure, can you?">Hello</a>},
-      link_to("Hello", "http://www.example.com", data: { confirm: "You cant possibly be sure, can you?" })
+      %{<a href="http://www.example.com" data-confirm="You cant possibly be sure, can you?" target="_blank">Hello</a>},
+      link_to_blank("Hello", "http://www.example.com", data: { confirm: "You cant possibly be sure, can you?" })
     )
     assert_dom_equal(
-      %{<a href="http://www.example.com" data-confirm="You cant possibly be sure,\n can you?">Hello</a>},
-      link_to("Hello", "http://www.example.com", data: { confirm: "You cant possibly be sure,\n can you?" })
+      %{<a href="http://www.example.com" data-confirm="You cant possibly be sure,\n can you?" target="_blank">Hello</a>},
+      link_to_blank("Hello", "http://www.example.com", data: { confirm: "You cant possibly be sure,\n can you?" })
     )
   end
 
@@ -112,20 +112,20 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
     skip('Not deprecate in Rails3.2') if ActionPack::VERSION::MAJOR == 3
     assert_deprecated ":confirm option is deprecated and will be removed from Rails 4.1. Use 'data: { confirm: \'Text\' }' instead" do
       assert_dom_equal(
-        %{<a href="http://www.example.com" data-confirm="Are you sure?">Hello</a>},
-        link_to("Hello", "http://www.example.com", confirm: "Are you sure?")
+        %{<a href="http://www.example.com" data-confirm="Are you sure?" target="_blank">Hello</a>},
+        link_to_blank("Hello", "http://www.example.com", confirm: "Are you sure?")
       )
     end
     assert_deprecated ":confirm option is deprecated and will be removed from Rails 4.1. Use 'data: { confirm: \'Text\' }' instead" do
       assert_dom_equal(
-        %{<a href="http://www.example.com" data-confirm="You cant possibly be sure, can you?">Hello</a>},
-        link_to("Hello", "http://www.example.com", confirm: "You cant possibly be sure, can you?")
+        %{<a href="http://www.example.com" data-confirm="You cant possibly be sure, can you?" target="_blank">Hello</a>},
+        link_to_blank("Hello", "http://www.example.com", confirm: "You cant possibly be sure, can you?")
       )
     end
     assert_deprecated ":confirm option is deprecated and will be removed from Rails 4.1. Use 'data: { confirm: \'Text\' }' instead" do
       assert_dom_equal(
-        %{<a href="http://www.example.com" data-confirm="You cant possibly be sure,\n can you?">Hello</a>},
-        link_to("Hello", "http://www.example.com", confirm: "You cant possibly be sure,\n can you?")
+        %{<a href="http://www.example.com" data-confirm="You cant possibly be sure,\n can you?" target="_blank">Hello</a>},
+        link_to_blank("Hello", "http://www.example.com", confirm: "You cant possibly be sure,\n can you?")
       )
     end
   end
