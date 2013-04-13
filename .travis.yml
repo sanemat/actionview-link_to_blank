@@ -8,9 +8,3 @@ gemfile:
 branches:
   only:
     - master
-matrix:
-  allow_failures:
-    - rvm: 1.9.3
-      gemfile: gemfiles/rails4.0.gemfile
-    - rvm: 2.0.0
-      gemfile: gemfiles/rails4.0.gemfile
