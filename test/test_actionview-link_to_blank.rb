@@ -1,15 +1,34 @@
 require 'minitest/autorun'
 require 'active_support/concern'
 require 'active_support/core_ext'
-require 'action_view/helpers/capture_helper'
-require 'action_view/helpers/url_helper'
+require 'action_view'
 require 'action_view/link_to_blank/link_to_blank'
-require 'action_dispatch/testing/assertions'
+require 'action_dispatch'
 
 class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
+
+  # In a few cases, the helper proxies to 'controller'
+  # or request.
+  #
+  # In those cases, we'll set up a simple mock
+  attr_accessor :controller, :request
+
+  routes = ActionDispatch::Routing::RouteSet.new
+  routes.draw do
+    get "/" => "foo#bar"
+    get "/other" => "foo#other"
+    get "/article/:id" => "foo#article", :as => :article
+  end
+
   include ActionView::Helpers::UrlHelper
+  include routes.url_helpers
 
   include ActionDispatch::Assertions::DomAssertions
+
+  def hash_for(options = {})
+    { controller: "foo", action: "bar" }.merge!(options)
+  end
+  alias url_hash hash_for
 
   def test_initialization
     [:link_to_blank].each do |method|
@@ -20,12 +39,12 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
   def test_link_tag_with_straight_url
     assert_dom_equal %{<a href="http://www.example.com" target="_blank">Hello</a>}, link_to_blank("Hello", "http://www.example.com")
   end
-=begin
 
   def test_link_tag_without_host_option
-    assert_dom_equal(%{<a href="/">Test Link</a>}, link_to('Test Link', url_hash))
+    assert_dom_equal(%{<a href="/" target="_blank">Test Link</a>}, link_to_blank('Test Link', url_hash))
   end
 
+=begin
   def test_link_tag_with_host_option
     hash = hash_for(host: "www.example.com")
     expected = %{<a href="http://www.example.com/">Test Link</a>}
