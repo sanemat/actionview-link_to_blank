@@ -130,7 +130,6 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
     end
   end
 
-=begin
   def test_link_to_with_remote
     assert_dom_equal(
       %{<a href="http://www.example.com" data-remote="true">Hello</a>},
@@ -193,6 +192,7 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
       link_to("Hello", "http://www.example.com", method: :post, data: { confirm: "Are you serious?" })
     )
   end
+=begin
 
   def test_link_tag_using_post_javascript_and_with_deprecated_confirm
     assert_deprecated ":confirm option is deprecated and will be removed from Rails 4.1. Use 'data: { confirm: \'Text\' }' instead" do
