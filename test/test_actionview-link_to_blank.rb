@@ -109,6 +109,7 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
   end
 
   def test_link_tag_with_deprecated_confirm
+    skip('Not deprecate in Rails3.2') if ActionPack::VERSION::MAJOR == 3
     assert_deprecated ":confirm option is deprecated and will be removed from Rails 4.1. Use 'data: { confirm: \'Text\' }' instead" do
       assert_dom_equal(
         %{<a href="http://www.example.com" data-confirm="Are you sure?">Hello</a>},
