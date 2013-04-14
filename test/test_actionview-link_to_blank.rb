@@ -260,13 +260,13 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
   end
 
   def test_link_tag_escapes_content
-    assert_dom_equal %{<a href="/">Malicious &lt;script&gt;content&lt;/script&gt;</a>},
-      link_to("Malicious <script>content</script>", "/")
+    assert_dom_equal %{<a href="/" target="_blank">Malicious &lt;script&gt;content&lt;/script&gt;</a>},
+      link_to_blank("Malicious <script>content</script>", "/")
   end
 
   def test_link_tag_does_not_escape_html_safe_content
-    assert_dom_equal %{<a href="/">Malicious <script>content</script></a>},
-      link_to("Malicious <script>content</script>".html_safe, "/")
+    assert_dom_equal %{<a href="/" target="_blank">Malicious <script>content</script></a>},
+      link_to_blank("Malicious <script>content</script>".html_safe, "/")
   end
 
   private
