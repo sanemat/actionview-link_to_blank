@@ -258,7 +258,6 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
       link_to_blank("Gerd Müller", article_path("Gerd_Müller".html_safe))
     )
   end
-=begin
 
   def test_link_tag_escapes_content
     assert_dom_equal %{<a href="/">Malicious &lt;script&gt;content&lt;/script&gt;</a>},
@@ -269,7 +268,6 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
     assert_dom_equal %{<a href="/">Malicious <script>content</script></a>},
       link_to("Malicious <script>content</script>".html_safe, "/")
   end
-=end
 
   private
     # MiniTest does not have build_message method, so I copy from below:
