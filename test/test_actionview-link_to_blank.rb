@@ -254,8 +254,8 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
 
   def test_link_tag_with_html_safe_string
     assert_dom_equal(
-      %{<a href="/article/Gerd_M%C3%BCller">Gerd Müller</a>},
-      link_to("Gerd Müller", article_path("Gerd_Müller".html_safe))
+      %{<a href="/article/Gerd_M%C3%BCller" target="_blank">Gerd Müller</a>},
+      link_to_blank("Gerd Müller", article_path("Gerd_Müller".html_safe))
     )
   end
 =begin
