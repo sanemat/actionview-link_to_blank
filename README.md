@@ -20,7 +20,25 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Use the `link_to_blank` helper method, equal `link_to('foo', target: '_blank')`
+
+### Signatures
+
+    link_to_blank(body, url, html_options = {})
+      # url is a String; you can use URL helpers like
+      # posts_path
+
+    link_to_blank(body, url_options = {}, html_options = {})
+      # url_options, except :confirm or :method,
+      # is passed to url_for
+
+    link_to_blank(options = {}, html_options = {}) do
+      # name
+    end
+
+    link_to_blank(url, html_options = {}) do
+      # name
+    end
 
 ## Testing
 
