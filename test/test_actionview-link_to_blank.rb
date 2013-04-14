@@ -270,6 +270,10 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
       link_to_blank("Malicious <script>content</script>".html_safe, "/")
   end
 
+  def test_link_tag_override_specific
+    assert_dom_equal %{<a href="http://www.example.com" target="override">Hello</a>}, link_to_blank("Hello", "http://www.example.com", target: 'override')
+  end
+
   private
     # MiniTest does not have build_message method, so I copy from below:
     # https://github.com/rails/rails/blob/master/actionpack/lib/action_dispatch/testing/assertions/dom.rb
