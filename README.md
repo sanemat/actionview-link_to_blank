@@ -40,6 +40,18 @@ Use the `link_to_blank` helper method, equal `link_to('foo', target: '_blank')`
       # name
     end
 
+### Examples
+
+    link_to_blank "Profile", profile_path(@profile)
+    # => <a href="/profiles/1" target="_blank">Profile</a>
+
+    <%= link_to_blank(@profile) do %>
+      <strong><%= @profile.name %></strong> -- <span>Check it out!</span>
+    <% end %>
+    # => <a href="/profiles/1" target="_blank">
+           <strong>David</strong> -- <span>Check it out!</span>
+         </a>
+
 ## Testing
 
     $ bundle exec rake
