@@ -1,3 +1,4 @@
+#coding: utf-8
 require 'minitest/autorun'
 require 'active_support/concern'
 require 'active_support/core_ext'
@@ -5,6 +6,21 @@ require 'active_support/testing/deprecation'
 require 'action_view'
 require 'action_view/link_to_blank/link_to_blank'
 require 'action_dispatch'
+
+# Copy from actionpack/test/abstract_unit.rb
+module RenderERBUtils
+  def render_erb(string)
+    @virtual_path = nil
+
+    template = ActionView::Template.new(
+      string.strip,
+      "test template",
+      ActionView::Template::Handlers::ERB,
+      {})
+
+    template.render(self, {}).strip
+  end
+end
 
 class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
 
@@ -27,6 +43,7 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
   include ActionDispatch::Assertions::DomAssertions
   include ActiveSupport::Testing::Deprecation
   include ActionView::Context
+  include RenderERBUtils
 
   def hash_for(options = {})
     { controller: "foo", action: "bar" }.merge!(options)
@@ -231,29 +248,27 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
       link_to_blank('/', class: "special") { content_tag(:span, 'Example site') }
   end
 
-=begin
   def test_link_tag_using_block_in_erb
-    out = render_erb %{<%= link_to('/') do %>Example site<% end %>}
-    assert_equal '<a href="/">Example site</a>', out
+    out = render_erb %{<%= link_to_blank('/') do %>Example site<% end %>}
+    assert_equal '<a href="/" target="_blank">Example site</a>', out
   end
 
   def test_link_tag_with_html_safe_string
     assert_dom_equal(
-      %{<a href="/article/Gerd_M%C3%BCller">Gerd M端ller</a>},
-      link_to("Gerd M端ller", article_path("Gerd_M端ller".html_safe))
+      %{<a href="/article/Gerd_M%C3%BCller" target="_blank">Gerd Müller</a>},
+      link_to_blank("Gerd Müller", article_path("Gerd_Müller".html_safe))
     )
   end
 
   def test_link_tag_escapes_content
-    assert_dom_equal %{<a href="/">Malicious &lt;script&gt;content&lt;/script&gt;</a>},
-      link_to("Malicious <script>content</script>", "/")
+    assert_dom_equal %{<a href="/" target="_blank">Malicious &lt;script&gt;content&lt;/script&gt;</a>},
+      link_to_blank("Malicious <script>content</script>", "/")
   end
 
   def test_link_tag_does_not_escape_html_safe_content
-    assert_dom_equal %{<a href="/">Malicious <script>content</script></a>},
-      link_to("Malicious <script>content</script>".html_safe, "/")
+    assert_dom_equal %{<a href="/" target="_blank">Malicious <script>content</script></a>},
+      link_to_blank("Malicious <script>content</script>".html_safe, "/")
   end
-=end
 
   private
     # MiniTest does not have build_message method, so I copy from below:
