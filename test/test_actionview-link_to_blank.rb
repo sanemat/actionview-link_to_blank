@@ -6,6 +6,21 @@ require 'action_view'
 require 'action_view/link_to_blank/link_to_blank'
 require 'action_dispatch'
 
+# Copy from actionpack/test/abstract_unit.rb
+module RenderERBUtils
+  def render_erb(string)
+    @virtual_path = nil
+
+    template = ActionView::Template.new(
+      string.strip,
+      "test template",
+      ActionView::Template::Handlers::ERB,
+      {})
+
+    template.render(self, {}).strip
+  end
+end
+
 class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
 
   # In a few cases, the helper proxies to 'controller'
@@ -27,6 +42,7 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
   include ActionDispatch::Assertions::DomAssertions
   include ActiveSupport::Testing::Deprecation
   include ActionView::Context
+  include RenderERBUtils
 
   def hash_for(options = {})
     { controller: "foo", action: "bar" }.merge!(options)
@@ -231,12 +247,12 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
       link_to_blank('/', class: "special") { content_tag(:span, 'Example site') }
   end
 
-=begin
   def test_link_tag_using_block_in_erb
     out = render_erb %{<%= link_to('/') do %>Example site<% end %>}
     assert_equal '<a href="/">Example site</a>', out
   end
 
+=begin
   def test_link_tag_with_html_safe_string
     assert_dom_equal(
       %{<a href="/article/Gerd_M%C3%BCller">Gerd M端ller</a>},
