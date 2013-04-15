@@ -18,6 +18,19 @@ module LinkToBlank
             link_to(name, options, html_options)
           end
         end
+
+        # actionpack/lib/action_view/helpers/url_helper.rb
+        def link_to_blank_unless(condition, name, options = {}, html_options = {}, &block)
+          if condition
+            if block_given?
+              block.arity <= 1 ? capture(name, &block) : capture(name, options, html_options, &block)
+            else
+              name
+            end
+          else
+            link_to_blank(name, options, html_options)
+          end
+        end
       end
     end
   end
