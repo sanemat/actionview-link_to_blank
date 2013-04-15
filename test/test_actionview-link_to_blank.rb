@@ -275,20 +275,20 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
   end
 
   def test_link_to_unless
-    assert_equal "Showing", link_to_unless(true, "Showing", url_hash)
+    assert_equal "Showing", link_to_blank_unless(true, "Showing", url_hash)
 
-    assert_dom_equal %{<a href="/">Listing</a>},
-      link_to_unless(false, "Listing", url_hash)
+    assert_dom_equal %{<a href="/" target="_blank">Listing</a>},
+      link_to_blank_unless(false, "Listing", url_hash)
 
-    assert_equal "Showing", link_to_unless(true, "Showing", url_hash)
+    assert_equal "Showing", link_to_blank_unless(true, "Showing", url_hash)
 
     assert_equal "<strong>Showing</strong>",
-      link_to_unless(true, "Showing", url_hash) { |name|
+      link_to_blank_unless(true, "Showing", url_hash) { |name|
         "<strong>#{name}</strong>".html_safe
       }
 
     assert_equal "test",
-      link_to_unless(true, "Showing", url_hash) {
+      link_to_blank_unless(true, "Showing", url_hash) {
         "test"
       }
   end
