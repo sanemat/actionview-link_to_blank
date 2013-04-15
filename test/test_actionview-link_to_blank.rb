@@ -299,6 +299,49 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
     assert_equal "Showing", link_to_blank_if(false, "Showing", url_hash)
   end
 
+  def test_link_unless_current
+    @request = request_for_url("/")
+
+    assert_equal "Showing",
+      link_to_unless_current("Showing", url_hash)
+    assert_equal "Showing",
+      link_to_unless_current("Showing", "http://www.example.com/")
+
+    @request = request_for_url("/?order=desc")
+
+    assert_equal "Showing",
+      link_to_unless_current("Showing", url_hash)
+    assert_equal "Showing",
+      link_to_unless_current("Showing", "http://www.example.com/")
+
+    @request = request_for_url("/?order=desc&page=1")
+
+    assert_equal "Showing",
+      link_to_unless_current("Showing", hash_for(order: 'desc', page: '1'))
+    assert_equal "Showing",
+      link_to_unless_current("Showing", "http://www.example.com/?order=desc&page=1")
+
+    @request = request_for_url("/?order=desc")
+
+    assert_equal %{<a href="/?order=asc">Showing</a>},
+      link_to_unless_current("Showing", hash_for(order: :asc))
+    assert_equal %{<a href="http://www.example.com/?order=asc">Showing</a>},
+      link_to_unless_current("Showing", "http://www.example.com/?order=asc")
+
+    @request = request_for_url("/?order=desc")
+    assert_equal %{<a href="/?order=desc&amp;page=2\">Showing</a>},
+      link_to_unless_current("Showing", hash_for(order: "desc", page: 2))
+    assert_equal %{<a href="http://www.example.com/?order=desc&amp;page=2">Showing</a>},
+      link_to_unless_current("Showing", "http://www.example.com/?order=desc&page=2")
+
+    @request = request_for_url("/show")
+
+    assert_equal %{<a href="/">Listing</a>},
+      link_to_unless_current("Listing", url_hash)
+    assert_equal %{<a href="http://www.example.com/">Listing</a>},
+      link_to_unless_current("Listing", "http://www.example.com/")
+  end
+
   private
     # MiniTest does not have build_message method, so I copy from below:
     # https://github.com/rails/rails/blob/master/actionpack/lib/action_dispatch/testing/assertions/dom.rb
