@@ -299,6 +299,11 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
     assert_equal "Showing", link_to_blank_if(false, "Showing", url_hash)
   end
 
+  def request_for_url(url, opts = {})
+    env = Rack::MockRequest.env_for("http://www.example.com#{url}", opts)
+    ActionDispatch::Request.new(env)
+  end
+
   def test_link_unless_current
     @request = request_for_url("/")
 
