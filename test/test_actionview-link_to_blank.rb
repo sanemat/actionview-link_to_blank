@@ -293,6 +293,12 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
       }
   end
 
+  def test_link_to_if
+    assert_equal "Showing", link_to_blank_if(false, "Showing", url_hash)
+    assert_dom_equal %{<a href="/" target="_blank">Listing</a>}, link_to_blank_if(true, "Listing", url_hash)
+    assert_equal "Showing", link_to_blank_if(false, "Showing", url_hash)
+  end
+
   private
     # MiniTest does not have build_message method, so I copy from below:
     # https://github.com/rails/rails/blob/master/actionpack/lib/action_dispatch/testing/assertions/dom.rb

@@ -31,8 +31,8 @@ module LinkToBlank
           end
         end
 
-        def link_to_if(condition, name, options = {}, html_options = {}, &block)
-          link_to_unless !condition, name, options, html_options, &block
+        def link_to_blank_if(condition, name, options = {}, html_options = {}, &block)
+          link_to_blank_unless !condition, name, options, html_options, &block
         end
       end
     end
