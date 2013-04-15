@@ -19,7 +19,6 @@ module LinkToBlank
           end
         end
 
-        # actionpack/lib/action_view/helpers/url_helper.rb
         def link_to_blank_unless(condition, name, options = {}, html_options = {}, &block)
           if condition
             if block_given?
