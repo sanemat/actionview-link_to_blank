@@ -274,6 +274,25 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
     assert_dom_equal %{<a href="http://www.example.com" target="override">Hello</a>}, link_to_blank("Hello", "http://www.example.com", target: 'override')
   end
 
+  def test_link_to_unless
+    assert_equal "Showing", link_to_unless(true, "Showing", url_hash)
+
+    assert_dom_equal %{<a href="/">Listing</a>},
+      link_to_unless(false, "Listing", url_hash)
+
+    assert_equal "Showing", link_to_unless(true, "Showing", url_hash)
+
+    assert_equal "<strong>Showing</strong>",
+      link_to_unless(true, "Showing", url_hash) { |name|
+        "<strong>#{name}</strong>".html_safe
+      }
+
+    assert_equal "test",
+      link_to_unless(true, "Showing", url_hash) {
+        "test"
+      }
+  end
+
   private
     # MiniTest does not have build_message method, so I copy from below:
     # https://github.com/rails/rails/blob/master/actionpack/lib/action_dispatch/testing/assertions/dom.rb
