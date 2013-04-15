@@ -3,6 +3,8 @@
 [![Build Status](https://api.travis-ci.org/sanemat/actionview-link_to_blank.png?branch=master)](https://travis-ci.org/sanemat/actionview-link_to_blank)
 
 Add helper method, link_to_blank, equal to link_to with target _blank
+Add helper method, link_to_blank_if, link_to_blank_unless, link_to_blank_unless_current.
+This is symmetrical to link_to_if, link_to_unless, link_to_unless_current.
 
 ## Installation
 
@@ -39,6 +41,17 @@ Use the `link_to_blank` helper method, equal `link_to('foo', target: '_blank')`
     link_to_blank(url, html_options = {}) do
       # name
     end
+
+    link_to_blank_if(condition, name, options = {}, html_options = {})
+      # if condition is true, create a link tag
+      # otherwise only name
+
+    link_to_blank_unless(condition, name, options = {}, html_options = {})
+      # if condition is true, only name
+      # otherwise create a link tag
+
+    link_to_blank_unless_current(name, options = {}, html_options = {})
+      # create a link tag of the given name unless current page is the same
 
 ### Examples
 

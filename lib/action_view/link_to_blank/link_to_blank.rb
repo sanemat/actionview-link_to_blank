@@ -18,6 +18,26 @@ module LinkToBlank
             link_to(name, options, html_options)
           end
         end
+
+        def link_to_blank_unless(condition, name, options = {}, html_options = {}, &block)
+          if condition
+            if block_given?
+              block.arity <= 1 ? capture(name, &block) : capture(name, options, html_options, &block)
+            else
+              name
+            end
+          else
+            link_to_blank(name, options, html_options)
+          end
+        end
+
+        def link_to_blank_if(condition, name, options = {}, html_options = {}, &block)
+          link_to_blank_unless !condition, name, options, html_options, &block
+        end
+
+        def link_to_blank_unless_current(name, options = {}, html_options = {}, &block)
+          link_to_blank_unless current_page?(options), name, options, html_options, &block
+        end
       end
     end
   end
