@@ -34,6 +34,10 @@ module LinkToBlank
         def link_to_blank_if(condition, name, options = {}, html_options = {}, &block)
           link_to_blank_unless !condition, name, options, html_options, &block
         end
+
+        def link_to_unless_current(name, options = {}, html_options = {}, &block)
+          link_to_unless current_page?(options), name, options, html_options, &block
+        end
       end
     end
   end
