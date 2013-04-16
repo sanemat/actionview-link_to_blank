@@ -3,8 +3,8 @@ rvm:
  - 1.9.3
  - 2.0.0
 gemfile:
- - gemfiles/rails3.2/Gemfile
- - gemfiles/rails4.0/Gemfile
+ - gemfiles/rails3_2.gemfile
+ - gemfiles/rails4_0.gemfile
 branches:
   only:
     - master
