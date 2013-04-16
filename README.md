@@ -71,13 +71,13 @@ Use the `link_to_blank` helper method, equal `link_to('foo', target: '_blank')`
 
 If you want to run against actionpack v3 and v4, run below:
 
-    $ bundle --gemfile=gemfiles/rails3.2/Gemfile --path=.bundle
-    # this install gems to gemfiles/rails3.2/.bundle/xxx
-    $ bundle exec rake BUNDLE_GEMFILE=gemfiles/rails3.2/Gemfile
+    $ bundle exec rake appraisal:install
+    $ bundle exec rake appraisal
 
-    $ bundle --gemfile=gemfiles/rails4.0/Gemfile --path=.bundle
-    # this install gems to gemfiles/rails4.0/.bundle/xxx
-    $ bundle exec rake BUNDLE_GEMFILE=gemfiles/rails4.0/Gemfile
+Test for specific version:
+
+    $ bundle exec rake appraisal:install
+    $ bundle exec rake appraisal:rails4_0
 
 ## Contributing
 
