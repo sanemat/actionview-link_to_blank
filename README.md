@@ -79,6 +79,8 @@ Test for specific version:
     $ bundle exec rake appraisal:install
     $ bundle exec rake appraisal:rails4_0
 
+Prepare rails4_0 and rails3_2
+
 ## Contributing
 
 1. Fork it
