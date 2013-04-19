@@ -9,3 +9,9 @@ appraise "rails4_0" do
   gem 'actionpack', version
   gem 'activesupport', version
 end
+
+appraise "rails_master" do
+  gem 'rails', github: 'rails'
+  #gem 'actionpack'
+  #gem 'activesupport'
+end
