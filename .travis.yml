@@ -9,3 +9,6 @@ gemfile:
 branches:
   only:
     - master
+matrix:
+  allow_failures:
+    - gemfiles/rails_master.gemfile
