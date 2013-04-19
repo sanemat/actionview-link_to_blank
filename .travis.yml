@@ -11,4 +11,4 @@ branches:
     - master
 matrix:
   allow_failures:
-    - gemfiles/rails_master.gemfile
+    - gemfile: gemfiles/rails_master.gemfile
