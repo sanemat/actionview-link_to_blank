@@ -1,6 +1,6 @@
 # ActionView::LinkToBlank
 
-[![Build Status](https://api.travis-ci.org/sanemat/actionview-link_to_blank.png?branch=master)](https://travis-ci.org/sanemat/actionview-link_to_blank)
+[![Build Status](https://api.travis-ci.org/sanemat/actionview-link_to_blank.png?branch=master)](https://travis-ci.org/sanemat/actionview-link_to_blank) [![Code Climate](https://codeclimate.com/github/sanemat/actionview-link_to_blank.png)](https://codeclimate.com/github/sanemat/actionview-link_to_blank) [![Coverage Status](https://coveralls.io/repos/sanemat/actionview-link_to_blank/badge.png?branch=master)](https://coveralls.io/r/sanemat/actionview-link_to_blank)
 
 Add helper method, link_to_blank, equal to link_to with target _blank
 Add helper method, link_to_blank_if, link_to_blank_unless, link_to_blank_unless_current.
