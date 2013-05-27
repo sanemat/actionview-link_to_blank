@@ -15,3 +15,15 @@ appraise "rails_master" do
   #gem 'actionpack'
   #gem 'activesupport'
 end
+
+appraise "rails_3_2_stable" do
+  gem 'rails', github: 'rails', branch: '3-2-stable'
+  #gem 'actionpack'
+  #gem 'activesupport'
+end
+
+appraise "rails_4_0_stable" do
+  gem 'rails', github: 'rails', branch: '4-0-stable'
+  #gem 'actionpack'
+  #gem 'activesupport'
+end
