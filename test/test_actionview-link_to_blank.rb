@@ -1,4 +1,7 @@
 #coding: utf-8
+require 'coveralls'
+Coveralls.wear!
+
 require 'minitest/autorun'
 require 'active_support/concern'
 require 'active_support/core_ext'
