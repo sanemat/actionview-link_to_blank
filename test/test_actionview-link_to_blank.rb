@@ -131,6 +131,7 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
 
   def test_link_tag_with_deprecated_confirm
     skip('Not deprecate in Rails3.2') if ActionPack::VERSION::MAJOR == 3
+    skip('Remove in Rails4.1') if ActionPack::VERSION::MAJOR == 4 && ActionPack::VERSION::MINOR >= 1
     assert_deprecated ":confirm option is deprecated and will be removed from Rails 4.1. Use 'data: { confirm: \'Text\' }' instead" do
       assert_dom_equal(
         %{<a href="http://www.example.com" data-confirm="Are you sure?" target="_blank">Hello</a>},
@@ -216,6 +217,7 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
 
   def test_link_tag_using_post_javascript_and_with_deprecated_confirm
     skip('Not deprecate in Rails3.2') if ActionPack::VERSION::MAJOR == 3
+    skip('Remove in Rails4.1') if ActionPack::VERSION::MAJOR == 4 && ActionPack::VERSION::MINOR >= 1
     assert_deprecated ":confirm option is deprecated and will be removed from Rails 4.1. Use 'data: { confirm: \'Text\' }' instead" do
       assert_dom_equal(
         %{<a href="http://www.example.com" data-method="post" rel="nofollow" data-confirm="Are you serious?" target="_blank">Hello</a>},
@@ -233,6 +235,7 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
 
   def test_link_tag_using_delete_javascript_and_href_and_with_deprecated_confirm
     skip('Not deprecate in Rails3.2') if ActionPack::VERSION::MAJOR == 3
+    skip('Remove in Rails4.1') if ActionPack::VERSION::MAJOR == 4 && ActionPack::VERSION::MINOR >= 1
     assert_deprecated ":confirm option is deprecated and will be removed from Rails 4.1. Use 'data: { confirm: \'Text\' }' instead" do
       assert_dom_equal(
         %{<a href="\#" rel="nofollow" data-confirm="Are you serious?" data-method="delete" target="_blank">Destroy</a>},
