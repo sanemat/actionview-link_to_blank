@@ -3,6 +3,9 @@
 source "https://rubygems.org"
 
 gem "coveralls", :require=>false
-gem "rails", :github=>"rails"
+gem "pry"
+gem "appraisal", :github=>"thoughtbot/appraisal"
+gem "actionpack", :github=>"rails/rails", :branch=>"master"
+gem "activesupport", :github=>"rails/rails", :branch=>"master"
 
-gemspec :path=>"../"
+gemspec :path=>".././"
