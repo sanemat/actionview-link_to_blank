@@ -12,6 +12,7 @@ end
 
 appraise "rails_master" do
   gem 'actionview', github: 'rails/rails', branch: 'master'
+  gem 'actionpack', github: 'rails/rails', branch: 'master'
   gem 'activesupport', github: 'rails/rails', branch: 'master'
 end
 
