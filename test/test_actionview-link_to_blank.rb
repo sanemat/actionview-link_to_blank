@@ -26,7 +26,7 @@ module RenderERBUtils
   end
 end
 
-class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
+class TestActionViewLinkToBlank < Minitest::Test
 
   # In a few cases, the helper proxies to 'controller'
   # or request.
