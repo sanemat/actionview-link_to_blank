@@ -320,7 +320,6 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
   def test_link_to_if
     assert_equal "Showing", link_to_blank_if(false, "Showing", url_hash)
     assert_dom_equal %{<a href="/" target="_blank">Listing</a>}, link_to_blank_if(true, "Listing", url_hash)
-    assert_equal "Showing", link_to_blank_if(false, "Showing", url_hash)
   end
 
   def request_for_url(url, opts = {})
