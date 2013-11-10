@@ -26,6 +26,9 @@ module RenderERBUtils
   end
 end
 
+# Rails4.1, this code is here:
+# actionview/test/template/url_helper_test.rb
+# and base class is ActiveSupport::TestCase
 class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
 
   # In a few cases, the helper proxies to 'controller'
@@ -110,6 +113,7 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
 
   def test_link_tag_with_custom_onclick
     link = link_to_blank("Hello", "http://www.example.com", onclick: "alert('yay!')")
+    # NOTE: differences between AP v3 and v4
     escaped_onclick = ActionPack::VERSION::MAJOR == 3 ? %{alert(&#x27;yay!&#x27;)} : %{alert(&#39;yay!&#39;)}
     expected = %{<a href="http://www.example.com" onclick="#{escaped_onclick}" target="_blank">Hello</a>}
     assert_dom_equal expected, link
