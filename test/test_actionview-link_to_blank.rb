@@ -26,6 +26,9 @@ module RenderERBUtils
   end
 end
 
+# Rails4.1, this code is here:
+# actionview/test/template/url_helper_test.rb
+# and base class is ActiveSupport::TestCase
 class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
 
   # In a few cases, the helper proxies to 'controller'
@@ -110,6 +113,7 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
 
   def test_link_tag_with_custom_onclick
     link = link_to_blank("Hello", "http://www.example.com", onclick: "alert('yay!')")
+    # NOTE: differences between AP v3 and v4
     escaped_onclick = ActionPack::VERSION::MAJOR == 3 ? %{alert(&#x27;yay!&#x27;)} : %{alert(&#39;yay!&#39;)}
     expected = %{<a href="http://www.example.com" onclick="#{escaped_onclick}" target="_blank">Hello</a>}
     assert_dom_equal expected, link
@@ -132,7 +136,7 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
 
   def test_link_tag_with_deprecated_confirm
     skip('Not deprecate in Rails3.2') if ActionPack::VERSION::MAJOR == 3
-    skip('Remove in Rails4.1') if ActionPack::VERSION::MAJOR == 4 && ActionPack::VERSION::MINOR >= 1
+    skip('Remove in Rails4.1') if ActionPack::VERSION::MAJOR >= 4 && ActionPack::VERSION::MINOR >= 1
     assert_deprecated ":confirm option is deprecated and will be removed from Rails 4.1. Use 'data: { confirm: \'Text\' }' instead" do
       assert_dom_equal(
         %{<a href="http://www.example.com" data-confirm="Are you sure?" target="_blank">Hello</a>},
@@ -218,7 +222,7 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
 
   def test_link_tag_using_post_javascript_and_with_deprecated_confirm
     skip('Not deprecate in Rails3.2') if ActionPack::VERSION::MAJOR == 3
-    skip('Remove in Rails4.1') if ActionPack::VERSION::MAJOR == 4 && ActionPack::VERSION::MINOR >= 1
+    skip('Remove in Rails4.1') if ActionPack::VERSION::MAJOR >= 4 && ActionPack::VERSION::MINOR >= 1
     assert_deprecated ":confirm option is deprecated and will be removed from Rails 4.1. Use 'data: { confirm: \'Text\' }' instead" do
       assert_dom_equal(
         %{<a href="http://www.example.com" data-method="post" rel="nofollow" data-confirm="Are you serious?" target="_blank">Hello</a>},
@@ -236,7 +240,7 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
 
   def test_link_tag_using_delete_javascript_and_href_and_with_deprecated_confirm
     skip('Not deprecate in Rails3.2') if ActionPack::VERSION::MAJOR == 3
-    skip('Remove in Rails4.1') if ActionPack::VERSION::MAJOR == 4 && ActionPack::VERSION::MINOR >= 1
+    skip('Remove in Rails4.1') if ActionPack::VERSION::MAJOR >= 4 && ActionPack::VERSION::MINOR >= 1
     assert_deprecated ":confirm option is deprecated and will be removed from Rails 4.1. Use 'data: { confirm: \'Text\' }' instead" do
       assert_dom_equal(
         %{<a href="\#" rel="nofollow" data-confirm="Are you serious?" data-method="delete" target="_blank">Destroy</a>},
@@ -253,6 +257,13 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
   def test_link_tag_with_block_and_html_options
     assert_dom_equal %{<a class="special" href="/" target="_blank"><span>Example site</span></a>},
       link_to_blank('/', class: "special") { content_tag(:span, 'Example site') }
+  end
+
+  def test_link_tag_using_block_and_hash
+    assert_dom_equal(
+      %{<a href="/" target="_blank"><span>Example site</span></a>},
+      link_to_blank(url_hash) { content_tag(:span, 'Example site') }
+    )
   end
 
   def test_link_tag_using_block_in_erb
@@ -298,12 +309,17 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
       link_to_blank_unless(true, "Showing", url_hash) {
         "test"
       }
+
+    # FIXME
+    # assert_equal %{&lt;b&gt;Showing&lt;/b&gt;}, link_to_unless(true, "<b>Showing</b>", url_hash)
+    # assert_equal %{<a href="/">&lt;b&gt;Showing&lt;/b&gt;</a>}, link_to_unless(false, "<b>Showing</b>", url_hash)
+    # assert_equal %{<b>Showing</b>}, link_to_unless(true, "<b>Showing</b>".html_safe, url_hash)
+    # assert_equal %{<a href="/"><b>Showing</b></a>}, link_to_unless(false, "<b>Showing</b>".html_safe, url_hash)
   end
 
   def test_link_to_if
     assert_equal "Showing", link_to_blank_if(false, "Showing", url_hash)
     assert_dom_equal %{<a href="/" target="_blank">Listing</a>}, link_to_blank_if(true, "Listing", url_hash)
-    assert_equal "Showing", link_to_blank_if(false, "Showing", url_hash)
   end
 
   def request_for_url(url, opts = {})
