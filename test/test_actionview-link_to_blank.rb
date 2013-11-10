@@ -259,6 +259,13 @@ class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
       link_to_blank('/', class: "special") { content_tag(:span, 'Example site') }
   end
 
+  def test_link_tag_using_block_and_hash
+    assert_dom_equal(
+      %{<a href="/" target="_blank"><span>Example site</span></a>},
+      link_to_blank(url_hash) { content_tag(:span, 'Example site') }
+    )
+  end
+
   def test_link_tag_using_block_in_erb
     out = render_erb %{<%= link_to_blank('/') do %>Example site<% end %>}
     assert_equal '<a href="/" target="_blank">Example site</a>', out
