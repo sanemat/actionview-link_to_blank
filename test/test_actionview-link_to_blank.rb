@@ -29,7 +29,11 @@ end
 # Rails4.1, this code is here:
 # actionview/test/template/url_helper_test.rb
 # and base class is ActiveSupport::TestCase
-class TestActionViewLinkToBlank < MiniTest::Unit::TestCase
+
+# Ensure backward compatibility with Minitest 4
+Minitest::Test = MiniTest::Unit::TestCase unless defined?(Minitest::Test)
+
+class TestActionViewLinkToBlank < MiniTest::Test
 
   # In a few cases, the helper proxies to 'controller'
   # or request.
