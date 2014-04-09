@@ -41,6 +41,9 @@ class TestActionViewLinkToBlank < MiniTest::Test
   # In those cases, we'll set up a simple mock
   attr_accessor :controller, :request
 
+  cattr_accessor :request_forgery
+  self.request_forgery = false
+
   routes = ActionDispatch::Routing::RouteSet.new
   routes.draw do
     get "/" => "foo#bar"
