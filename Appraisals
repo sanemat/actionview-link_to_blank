@@ -5,7 +5,13 @@ appraise "rails_3_2" do
 end
 
 appraise "rails_4_0" do
-  version = '~> 4.0.0.beta'
+  version = '~> 4.0.0'
+  gem 'actionpack', version
+  gem 'activesupport', version
+end
+
+appraise "rails_4_1" do
+  version = '~> 4.1.0'
   gem 'actionpack', version
   gem 'activesupport', version
 end
@@ -24,4 +30,9 @@ end
 appraise "rails_4_0_stable" do
   gem 'actionpack', github: 'rails/rails', branch: '4-0-stable'
   gem 'activesupport', github: 'rails/rails', branch: '4-0-stable'
+end
+
+appraise "rails_4_1_stable" do
+  gem 'actionpack', github: 'rails/rails', branch: '4-1-stable'
+  gem 'activesupport', github: 'rails/rails', branch: '4-1-stable'
 end
