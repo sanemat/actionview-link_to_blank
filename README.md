@@ -73,7 +73,7 @@ Use the `link_to_blank` helper method, equal `link_to('foo', target: '_blank')`
 
     $ bundle exec rake
 
-If you want to run against actionpack v3.2, v4.0 and v4.1, run below:
+If you want to run against actionpack v3.2, v4.0, v4.1, and v4.2 run below:
 
     $ bundle exec appraisal install
     $ bundle exec appraisal rake
@@ -83,7 +83,8 @@ Test for specific version:
     $ bundle exec appraisal install
     $ bundle exec appraisal rails_4_0 rake
 
-Prepare rails_3_2(gem), rails_3_2_stable(github), rails_4_0(gem), rails_4_0_stable(github), rails_master(github)
+Prepare rails_3_2(gem), rails_3_2_stable(github), rails_4_0(gem), rails_4_0_stable(github), rails_4_1(gem),
+rails_4_1_stable(github), rails_master(github)
 
 ## Contributing
 
