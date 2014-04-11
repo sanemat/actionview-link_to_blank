@@ -1,4 +1,4 @@
-#coding: utf-8
+# coding: utf-8
 require 'coveralls'
 Coveralls.wear!
 
@@ -35,7 +35,6 @@ end
 Minitest::Test = MiniTest::Unit::TestCase unless defined?(Minitest::Test)
 
 class TestActionViewLinkToBlank < MiniTest::Test
-
   # In a few cases, the helper proxies to 'controller'
   # or request.
   #

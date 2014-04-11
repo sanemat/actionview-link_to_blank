@@ -3,7 +3,7 @@ require 'rake/testtask'
 require 'appraisal'
 
 desc 'Default Task'
-task :default => :test
+task default: :test
 
 Rake::TestTask.new do |t|
   t.libs << 'test'
