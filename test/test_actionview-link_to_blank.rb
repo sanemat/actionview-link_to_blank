@@ -3,6 +3,7 @@ require 'coveralls'
 Coveralls.wear!
 
 require 'minitest/autorun'
+require 'active_support'
 require 'active_support/concern'
 require 'active_support/deprecation'
 require 'active_support/core_ext'
