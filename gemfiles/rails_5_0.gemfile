@@ -8,5 +8,6 @@ gem "appraisal", :github => "thoughtbot/appraisal"
 gem "actionview", "~> 5.0.0.beta"
 gem "actionpack", "~> 5.0.0.beta"
 gem "activesupport", "~> 5.0.0.beta"
+gem "rails-dom-testing"
 
 gemspec :path => "../"
