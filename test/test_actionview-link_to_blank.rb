@@ -8,9 +8,11 @@ require 'active_support/concern'
 require 'active_support/deprecation'
 require 'active_support/core_ext'
 require 'active_support/testing/deprecation'
+require 'action_controller'
 require 'action_view'
 require 'action_view/link_to_blank/link_to_blank'
 require 'action_dispatch'
+require 'rails-dom-testing' if Gem::Version.new(ActionPack::VERSION::STRING) >= Gem::Version.new("4.2")
 
 # Copy from actionpack/test/abstract_unit.rb
 module RenderERBUtils
@@ -54,7 +56,11 @@ class TestActionViewLinkToBlank < MiniTest::Test
   include ActionView::Helpers::UrlHelper
   include routes.url_helpers
 
-  include ActionDispatch::Assertions::DomAssertions
+  dom_assertion = Gem::Version.new(ActionPack::VERSION::STRING) < Gem::Version.new("4.2")\
+  ? ActionDispatch::Assertions::DomAssertions
+  : Rails::Dom::Testing::Assertions::DomAssertions
+
+  include dom_assertion
   include ActiveSupport::Testing::Deprecation
   include ActionView::Context
   include RenderERBUtils
@@ -142,8 +148,8 @@ class TestActionViewLinkToBlank < MiniTest::Test
   end
 
   def test_link_tag_with_deprecated_confirm
-    skip('Not deprecate in Rails3.2') if ActionPack::VERSION::MAJOR == 3
-    skip('Remove in Rails4.1') if ActionPack::VERSION::MAJOR >= 4 && ActionPack::VERSION::MINOR >= 1
+    skip('Not deprecate in Rails3.2') if Gem::Version.new(ActionPack::VERSION::STRING) < Gem::Version.new('4')
+    skip('Remove in Rails4.1') if Gem::Version.new(ActionPack::VERSION::STRING) >= Gem::Version.new('4.1')
     assert_deprecated ":confirm option is deprecated and will be removed from Rails 4.1. Use 'data: { confirm: \'Text\' }' instead" do
       assert_dom_equal(
         %{<a href="http://www.example.com" data-confirm="Are you sure?" target="_blank">Hello</a>},
@@ -228,8 +234,8 @@ class TestActionViewLinkToBlank < MiniTest::Test
   end
 
   def test_link_tag_using_post_javascript_and_with_deprecated_confirm
-    skip('Not deprecate in Rails3.2') if ActionPack::VERSION::MAJOR == 3
-    skip('Remove in Rails4.1') if ActionPack::VERSION::MAJOR >= 4 && ActionPack::VERSION::MINOR >= 1
+    skip('Not deprecate in Rails3.2') if Gem::Version.new(ActionPack::VERSION::STRING) < Gem::Version.new('4')
+    skip('Remove in Rails4.1') if Gem::Version.new(ActionPack::VERSION::STRING) >= Gem::Version.new('4.1')
     assert_deprecated ":confirm option is deprecated and will be removed from Rails 4.1. Use 'data: { confirm: \'Text\' }' instead" do
       assert_dom_equal(
         %{<a href="http://www.example.com" data-method="post" rel="nofollow" data-confirm="Are you serious?" target="_blank">Hello</a>},
@@ -246,8 +252,8 @@ class TestActionViewLinkToBlank < MiniTest::Test
   end
 
   def test_link_tag_using_delete_javascript_and_href_and_with_deprecated_confirm
-    skip('Not deprecate in Rails3.2') if ActionPack::VERSION::MAJOR == 3
-    skip('Remove in Rails4.1') if ActionPack::VERSION::MAJOR >= 4 && ActionPack::VERSION::MINOR >= 1
+    skip('Not deprecate in Rails3.2') if Gem::Version.new(ActionPack::VERSION::STRING) < Gem::Version.new('4')
+    skip('Remove in Rails4.1') if Gem::Version.new(ActionPack::VERSION::STRING) >= Gem::Version.new('4.1')
     assert_deprecated ":confirm option is deprecated and will be removed from Rails 4.1. Use 'data: { confirm: \'Text\' }' instead" do
       assert_dom_equal(
         %{<a href="\#" rel="nofollow" data-confirm="Are you serious?" data-method="delete" target="_blank">Destroy</a>},
@@ -275,7 +281,7 @@ class TestActionViewLinkToBlank < MiniTest::Test
 
   def test_link_tag_using_block_in_erb
     out = render_erb %{<%= link_to_blank('/') do %>Example site<% end %>}
-    assert_equal '<a href="/" target="_blank">Example site</a>', out
+    assert_dom_equal '<a href="/" target="_blank">Example site</a>', out
   end
 
   def test_link_tag_with_html_safe_string
@@ -358,22 +364,22 @@ class TestActionViewLinkToBlank < MiniTest::Test
 
     @request = request_for_url("/?order=desc")
 
-    assert_equal %{<a href="/?order=asc" target="_blank">Showing</a>},
+    assert_dom_equal %{<a href="/?order=asc" target="_blank">Showing</a>},
       link_to_blank_unless_current("Showing", hash_for(order: :asc))
-    assert_equal %{<a href="http://www.example.com/?order=asc" target="_blank">Showing</a>},
+    assert_dom_equal %{<a href="http://www.example.com/?order=asc" target="_blank">Showing</a>},
       link_to_blank_unless_current("Showing", "http://www.example.com/?order=asc")
 
     @request = request_for_url("/?order=desc")
-    assert_equal %{<a href="/?order=desc&amp;page=2\" target="_blank">Showing</a>},
+    assert_dom_equal %{<a href="/?order=desc&amp;page=2\" target="_blank">Showing</a>},
       link_to_blank_unless_current("Showing", hash_for(order: "desc", page: 2))
-    assert_equal %{<a href="http://www.example.com/?order=desc&amp;page=2" target="_blank">Showing</a>},
+    assert_dom_equal %{<a href="http://www.example.com/?order=desc&amp;page=2" target="_blank">Showing</a>},
       link_to_blank_unless_current("Showing", "http://www.example.com/?order=desc&page=2")
 
     @request = request_for_url("/show")
 
-    assert_equal %{<a href="/" target="_blank">Listing</a>},
+    assert_dom_equal %{<a href="/" target="_blank">Listing</a>},
       link_to_blank_unless_current("Listing", url_hash)
-    assert_equal %{<a href="http://www.example.com/" target="_blank">Listing</a>},
+    assert_dom_equal %{<a href="http://www.example.com/" target="_blank">Listing</a>},
       link_to_blank_unless_current("Listing", "http://www.example.com/")
   end
 
