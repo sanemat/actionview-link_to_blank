@@ -280,7 +280,7 @@ class TestActionViewLinkToBlank < MiniTest::Test
 
   def test_link_tag_using_block_in_erb
     out = render_erb %{<%= link_to_blank('/') do %>Example site<% end %>}
-    assert_equal '<a href="/" target="_blank">Example site</a>', out
+    assert_dom_equal '<a href="/" target="_blank">Example site</a>', out
   end
 
   def test_link_tag_with_html_safe_string
@@ -363,22 +363,22 @@ class TestActionViewLinkToBlank < MiniTest::Test
 
     @request = request_for_url("/?order=desc")
 
-    assert_equal %{<a href="/?order=asc" target="_blank">Showing</a>},
+    assert_dom_equal %{<a href="/?order=asc" target="_blank">Showing</a>},
       link_to_blank_unless_current("Showing", hash_for(order: :asc))
-    assert_equal %{<a href="http://www.example.com/?order=asc" target="_blank">Showing</a>},
+    assert_dom_equal %{<a href="http://www.example.com/?order=asc" target="_blank">Showing</a>},
       link_to_blank_unless_current("Showing", "http://www.example.com/?order=asc")
 
     @request = request_for_url("/?order=desc")
-    assert_equal %{<a href="/?order=desc&amp;page=2\" target="_blank">Showing</a>},
+    assert_dom_equal %{<a href="/?order=desc&amp;page=2\" target="_blank">Showing</a>},
       link_to_blank_unless_current("Showing", hash_for(order: "desc", page: 2))
-    assert_equal %{<a href="http://www.example.com/?order=desc&amp;page=2" target="_blank">Showing</a>},
+    assert_dom_equal %{<a href="http://www.example.com/?order=desc&amp;page=2" target="_blank">Showing</a>},
       link_to_blank_unless_current("Showing", "http://www.example.com/?order=desc&page=2")
 
     @request = request_for_url("/show")
 
-    assert_equal %{<a href="/" target="_blank">Listing</a>},
+    assert_dom_equal %{<a href="/" target="_blank">Listing</a>},
       link_to_blank_unless_current("Listing", url_hash)
-    assert_equal %{<a href="http://www.example.com/" target="_blank">Listing</a>},
+    assert_dom_equal %{<a href="http://www.example.com/" target="_blank">Listing</a>},
       link_to_blank_unless_current("Listing", "http://www.example.com/")
   end
 
