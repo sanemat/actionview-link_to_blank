@@ -12,7 +12,7 @@ require 'action_controller'
 require 'action_view'
 require 'action_view/link_to_blank/link_to_blank'
 require 'action_dispatch'
-require 'rails-dom-testing' if Gem::Version.new(ActiveSupport::VERSION::STRING) >= Gem::Version.new("4.2")
+require 'rails-dom-testing' if Gem::Version.new(ActionPack::VERSION::STRING) >= Gem::Version.new("4.2")
 
 # Copy from actionpack/test/abstract_unit.rb
 module RenderERBUtils
@@ -56,7 +56,7 @@ class TestActionViewLinkToBlank < MiniTest::Test
   include ActionView::Helpers::UrlHelper
   include routes.url_helpers
 
-  dom_assertion = Gem::Version.new(ActiveSupport::VERSION::STRING) < Gem::Version.new("4.2")\
+  dom_assertion = Gem::Version.new(ActionPack::VERSION::STRING) < Gem::Version.new("4.2")\
   ? ActionDispatch::Assertions::DomAssertions
   : Rails::Dom::Testing::Assertions::DomAssertions
 
