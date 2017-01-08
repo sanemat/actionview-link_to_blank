@@ -385,7 +385,7 @@ class TestActionViewLinkToBlank < MiniTest::Test
 
   private
 
-    if Gem::Version.new(ActionPack::VERSION::STRING) < Gem::Version.new("4")
+    if Gem::Version.new(ActionPack::VERSION::STRING) < Gem::Version.new("5")
       # MiniTest does not have build_message method, so I copy from below:
       # https://github.com/rails/rails/blob/master/actionpack/lib/action_dispatch/testing/assertions/dom.rb
       # Test::Unit
