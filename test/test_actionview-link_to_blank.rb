@@ -384,15 +384,18 @@ class TestActionViewLinkToBlank < MiniTest::Test
   end
 
   private
-    # MiniTest does not have build_message method, so I copy from below:
-    # https://github.com/rails/rails/blob/master/actionpack/lib/action_dispatch/testing/assertions/dom.rb
-    # Test::Unit
-    # http://doc.ruby-lang.org/ja/1.9.3/method/Test=3a=3aUnit=3a=3aAssertions/i/build_message.html
-    # Test::Unit (based on MiniTest)
-    # http://www.ruby-doc.org/stdlib-2.0/libdoc/test/unit/rdoc/Test/Unit/Assertions.html#method-i-message
-    def assert_dom_equal(expected, actual, message = "")
-      expected_dom = HTML::Document.new(expected).root
-      actual_dom   = HTML::Document.new(actual).root
-      assert_equal expected_dom, actual_dom
+
+    if Gem::Version.new(ActionPack::VERSION::STRING) < Gem::Version.new("5")
+      # MiniTest does not have build_message method, so I copy from below:
+      # https://github.com/rails/rails/blob/master/actionpack/lib/action_dispatch/testing/assertions/dom.rb
+      # Test::Unit
+      # http://doc.ruby-lang.org/ja/1.9.3/method/Test=3a=3aUnit=3a=3aAssertions/i/build_message.html
+      # Test::Unit (based on MiniTest)
+      # http://www.ruby-doc.org/stdlib-2.0/libdoc/test/unit/rdoc/Test/Unit/Assertions.html#method-i-message
+      def assert_dom_equal(expected, actual, message = "")
+        expected_dom = HTML::Document.new(expected).root
+        actual_dom   = HTML::Document.new(actual).root
+        assert_equal expected_dom, actual_dom
+      end
     end
 end
